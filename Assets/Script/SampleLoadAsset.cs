@@ -24,12 +24,6 @@ public class SampleLoadAsset : MonoBehaviour {
 
 		}
 
-		//画像のアセットを削除
-		if (GUI.Button (new Rect (10, 200, 200, 100), "LoadImageAsset")) {
-			Caching.CleanCache();
-			Debug.Log("CleanCache");
-		}
-
 		//キャッシュ削除
 		if (GUI.Button (new Rect (10, 300, 200, 100), "CleanCache")) {
 			Caching.CleanCache();
@@ -44,6 +38,7 @@ public class SampleLoadAsset : MonoBehaviour {
 
 
 		if (GUI.Button (new Rect (10, 500, 200, 100), "CreatGameObject")) {
+			//事前にLoadCacheOrDownload関数(サンプルソースのLoadAssetボタン)を呼び出してデータを読み込んでおくこと
 			CreatGameObject();
 			Debug.Log("CreatGameObject");
 		}
@@ -75,6 +70,8 @@ public class SampleLoadAsset : MonoBehaviour {
 	}
 
 	void PrefabAssetUnload(){
+
+		//trueを指定して強制的にメモリ解放したほうが、メモリ節約になる
 		prefabAsset.Unload (true);
 		imageAsset.Unload (true);
 	}
@@ -169,7 +166,7 @@ public class SampleLoadAsset : MonoBehaviour {
 	IEnumerator LoadCacheOrDownload(){
 		Debug.Log("LoadFromCacheOrDownload begin");
 
-		//さきにimageを読み込んでおく必要がある
+		//さきにimageを読み込んでおく必要がある。でないと、プレファブを表示したときにテクスチャがない状態になる
 		using (var www = WWW.LoadFromCacheOrDownload("http://localhost/assetbundles/image_bundle", 5))
 		{
 			yield return www;
@@ -181,6 +178,7 @@ public class SampleLoadAsset : MonoBehaviour {
 
 		}
 
+		//プレファブを読み込む
 		using (var www = WWW.LoadFromCacheOrDownload("http://localhost/assetbundles/prefab_bundle", 5))
 		{
 

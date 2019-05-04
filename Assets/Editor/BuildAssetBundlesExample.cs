@@ -19,7 +19,7 @@ public class BuildAssetBundlesExample : MonoBehaviour {
 	}
 		
 
-
+	//AssetBundleにprefabA(image1.pngを参照)だけ含めるケース
 	[MenuItem("Example/Build  prefab_bundle_prefabA_only")]
 	static void PrefabBundlePrefabAOnly()
 	{
@@ -32,10 +32,12 @@ public class BuildAssetBundlesExample : MonoBehaviour {
 		prefabAssets[0] = "Assets/AssetBundle/PrefabAssets/PrefabA.prefab";
 		buildMap[0].assetNames = prefabAssets;
 
+		//この場合、アセットバンドルprefab_bundle_prefab_A_onlyには、prefabA,image1.pngが追加される
+
 		BuildPipeline.BuildAssetBundles("Assets/ABs", buildMap, BuildAssetBundleOptions.None, BuildTarget.iOS);	
 	}
 		
-
+	//AssetBundleにprefabAB(image1.png,image2,pngを参照)だけ含めるケース
 	[MenuItem("Example/Build prefab_bundle_prefabAB_only")]
 	static void PrefabBundlePrefabABOnly()
 	{
@@ -48,11 +50,12 @@ public class BuildAssetBundlesExample : MonoBehaviour {
 		prefabAssets[0] = "Assets/AssetBundle/PrefabAssets/PrefabAB.prefab";
 		buildMap[0].assetNames = prefabAssets;
 
+		//この場合、アセットバンドルprefab_bundle_prefabAB_onlyには、prefabAB,image1.png,image2.pngが追加される
 		BuildPipeline.BuildAssetBundles("Assets/ABs", buildMap, BuildAssetBundleOptions.None, BuildTarget.iOS);	
 	}
 
-	//プレファブとテクスチャを分けたとき、アセットバンドルも分けて作成されるか確認する
-	[MenuItem("Example/Build Asset Bundles Using BuildMap")]
+	//AssetBundleをプレファブとテクスチャを分けたとき、アセットバンドルも分けて作成されるか確認する
+	[MenuItem("Example/Build prefab_and_image")]
 	static void BuildMapImageAndPrefabABs()
 	{
 		// Create the array of bundle build details.
@@ -60,6 +63,7 @@ public class BuildAssetBundlesExample : MonoBehaviour {
 
 		buildMap[0].assetBundleName = "image_bundle";
 
+		//テクスチャ用のアセットバンドル
 		string[]  imageAssets = new string[2];
 		imageAssets[0] = "Assets/AssetBundle/ImageAssets/image1.png";
 		imageAssets[1] = "Assets/AssetBundle/ImageAssets/image2.png";
@@ -67,7 +71,7 @@ public class BuildAssetBundlesExample : MonoBehaviour {
 		buildMap[0].assetNames = imageAssets;
 
 
-		//-------------------------------
+		//プレファブ用のアセットバンドル		
 		buildMap[1].assetBundleName = "prefab_bundle";
 		string[] prefabAssets = new string[4];
 		prefabAssets[0] = "Assets/AssetBundle/PrefabAssets/PrefabA.prefab";
